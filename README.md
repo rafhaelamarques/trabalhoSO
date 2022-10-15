@@ -1,5 +1,7 @@
-Objetivo: implementar a evacuação de um ambiente utilizando threads.
-Descrição: deverá ser desenvolvida uma solução de software que
+#Objetivo: implementar a evacuação de um ambiente utilizando threads.
+
+#Descrição: 
+Deverá ser desenvolvida uma solução de software que
 viabilize a criação de ambientes; neste neste ambiente deverão existir
 pessoas e portas; as pessoas deverão percorrer o ambiente de maneira
 aleatória até um limite de tempo pré-estabelecido; quando o limite de
