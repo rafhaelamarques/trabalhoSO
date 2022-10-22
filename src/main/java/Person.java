@@ -36,6 +36,7 @@ public class Person extends Thread {
                         timer += 1000;
                         if (timer >= time) {
                             gettingOut();
+                            break;
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -65,13 +66,17 @@ public class Person extends Thread {
 
     private void gettingOut() {
         int x = 0;
-        while (x < counter) {
-            Map.Entry<Integer, Integer> entry = exits.entrySet().iterator().next();
-            for (int i = 1; i <= counter; i++) {
-                System.out.println("Pessoa " + i + " - " + "saiu em: " + entry.getKey() + ", " + entry.getValue());
-                entry = getNextExit(entry);
-                x++;
+        if (exits.size() > 0) {
+            while (x < counter) {
+                Map.Entry<Integer, Integer> entry = exits.entrySet().iterator().next();
+                for (int i = 1; i <= counter; i++) {
+                    System.out.println("Pessoa " + i + " - " + "saiu em: " + entry.getKey() + ", " + entry.getValue());
+                    entry = getNextExit(entry);
+                    x++;
+                }
             }
+        } else {
+            System.out.println("Nenhuma porta encontrada");
         }
         System.exit(0);
     }
