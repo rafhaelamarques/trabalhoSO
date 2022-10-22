@@ -31,7 +31,7 @@ public class Person extends Thread {
     }
 
     public void pathFound() {
-        System.out.println("Pessoa " + number + " - " + "encontrou o caminho em: " + x + ", " + y);
+        System.out.println("Pessoa " + number + " - " + "encontrou um caminho em: " + x + ", " + y);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -40,7 +40,7 @@ public class Person extends Thread {
     }
 
     public void exitFound() {
-        System.out.println("Pessoa " + number + " - " + "encontrou a porta em: " + x + ", " + y);
+        System.out.println("Pessoa " + number + " - " + "encontrou uma porta em: " + x + ", " + y);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
