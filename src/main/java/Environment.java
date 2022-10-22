@@ -1,12 +1,15 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Environment {
-    private int size;
-    private int time;
-    private int numberOfPeople;
-    private int[][] environment;
-    private int[][] doorsLocation;
+    private final int size;
+    private final int time;
+    private final int numberOfPeople;
+    private final int[][] environment;
+    private final int[][] doorsLocation;
+    private final List<Person> people;
 
     public Environment(int size, int doors, int time, int numberOfPeople) {
         this.size = size;
@@ -14,6 +17,7 @@ public class Environment {
         this.numberOfPeople = numberOfPeople;
         this.environment = new int[size][size];
         this.doorsLocation = new int[size][size];
+        this.people = new ArrayList<Person>();
         createDoors(doors);
     }
 
@@ -50,18 +54,25 @@ public class Environment {
         }
     }
 
+    private void generatePeople() {
+        for (int i = 0; i < numberOfPeople; i++) {
+            Person person = new Person(i, environment);
+            people.add(person);
+        }
+    }
+
 
     private void findPath() {
         int timer = 0;
         while (timer < time) {
-            for (int i = 0; i < environment.length; i++) {
+            for (int[] ints : environment) {
                 for (int j = 0; j < environment.length; j++) {
-                    for (int k = 1; k <= numberOfPeople; k++) {
+                    for (int k = 0; k < numberOfPeople; k++) {
                         Person person = new Person(k, environment);
                         try {
-                            if (environment[i][j] == 0) {
+                            if (ints[j] == 0) {
                                 person.pathFound();
-                            } else if (environment[i][j] == 1) {
+                            } else if (ints[j] == 1) {
                                 person.exitFound();
                             }
                         } catch (Exception e) {

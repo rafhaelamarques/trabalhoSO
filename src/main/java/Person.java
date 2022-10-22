@@ -1,6 +1,6 @@
 public class Person extends Thread {
-    private int number;
-    private int[][] environment;
+    private final int number;
+    private final int[][] environment;
     private int x;
     private int y;
 
