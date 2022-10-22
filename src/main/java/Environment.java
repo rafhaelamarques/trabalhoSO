@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Environment {
     private final int size;
@@ -10,6 +7,8 @@ public class Environment {
     private final int[][] environment;
     private final int[][] doorsLocation;
     private final List<Person> people;
+    private final Map<Integer, Integer> exits;
+    private final Map<Integer, Integer> alredyUsed;
 
     public Environment(int size, int doors, int time, int numberOfPeople) {
         this.size = size;
@@ -17,7 +16,10 @@ public class Environment {
         this.numberOfPeople = numberOfPeople;
         this.environment = new int[size][size];
         this.doorsLocation = new int[size][size];
-        this.people = new ArrayList<Person>();
+        this.people = new ArrayList<>();
+        this.exits = new HashMap<>();
+        this.alredyUsed = new HashMap<>();
+
         createDoors(doors);
     }
 
@@ -36,13 +38,14 @@ public class Environment {
             for (int j = 0; j < size; j++) {
                 if (doorsLocation[i][j] == 1) {
                     environment[i][j] = 1;
+                    exits.put(i, j);
                 } else {
                     environment[i][j] = 0;
                 }
             }
         }
         printEnvironment();
-        findPath();
+        generatePeople();
     }
 
     private void printEnvironment() {
@@ -55,36 +58,68 @@ public class Environment {
     }
 
     private void generatePeople() {
-        for (int i = 0; i < numberOfPeople; i++) {
-            Person person = new Person(i, environment);
+        for (int i = 1; i <= numberOfPeople; i++) {
+            Person person = new Person(i);
             people.add(person);
+            person.start();
         }
+        findPath(people);
     }
 
 
-    private void findPath() {
+    private void findPath(List<Person> people) {
         int timer = 0;
         while (timer < time) {
-            for (int[] ints : environment) {
+            for (int i = 0; i < environment.length; i++) {
                 for (int j = 0; j < environment.length; j++) {
-                    for (int k = 0; k < numberOfPeople; k++) {
-                        Person person = new Person(k, environment);
-                        try {
-                            if (ints[j] == 0) {
-                                person.pathFound();
-                            } else if (ints[j] == 1) {
-                                person.exitFound();
+                    try {
+                        for (Person person : people) {
+                            int randomX = (int) (Math.random() * environment.length);
+                            int randomY = (int) (Math.random() * environment.length);
+                            if (environment[randomX][randomY] == 0) {
+                                person.pathFound(randomX, randomY);
+                            } else if (environment[randomX][randomY] == 1) {
+                                person.exitFound(randomX, randomY);
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            timer += 1000;
+                            if (timer >= time) {
+                                getOut();
+                            }
                         }
-                        timer += 1000;
-                        if (timer >= time) {
-                            break;
-                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
         }
+    }
+
+    private void getOut() {
+        int x = 0;
+        while (x < numberOfPeople) {
+            Map.Entry<Integer, Integer> entry = exits.entrySet().iterator().next();
+            for (Person p : people) {
+                p.gettingOut(entry.getKey(), entry.getValue());
+                entry = getNextExit(entry);
+                x++;
+            }
+        }
+        System.exit(0);
+    }
+
+    private Map.Entry<Integer, Integer> getNextExit(Map.Entry<Integer, Integer> exit) {
+        alredyUsed.put(exit.getKey(), exit.getValue());
+        Map.Entry<Integer, Integer> entry = exits.entrySet().iterator().next();
+        for (Map.Entry<Integer, Integer> e : exits.entrySet()) {
+            if (!Objects.equals(e.getKey(), exit.getKey()) && !Objects.equals(e.getValue(), exit.getValue())) {
+                if (!alredyUsed.containsKey(e.getKey()) && !alredyUsed.containsValue(e.getValue())) {
+                    entry = e;
+                    break;
+                } else {
+                    entry = e;
+                }
+            }
+        }
+        return entry;
     }
 }

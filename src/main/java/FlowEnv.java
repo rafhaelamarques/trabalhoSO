@@ -1,7 +1,7 @@
 public class FlowEnv {
 
     public static void main(String[] args) {
-        Environment environment = new Environment(10, 20, 10000, 10);
+        Environment environment = new Environment(8, 20, 20000, 5);
         environment.generateEnvironment();
     }
 
