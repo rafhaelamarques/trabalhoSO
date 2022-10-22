@@ -56,16 +56,29 @@ public class Environment {
 
 
     private void findPath() {
-        Timer timer = new Timer();
-        for (int i = 1; i <= numberOfPeople; i++) {
-            Person person = new Person(i, environment);
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    person.start();
+        int timer = 0;
+        while (timer < time) {
+            for (int i = 0; i < environment.length; i++) {
+                for (int j = 0; j < environment.length; j++) {
+                    for (int k = 1; k < numberOfPeople + 1; k++) {
+                        Person person = new Person(k, environment);
+                        try {
+                            if (environment[i][j] == 0) {
+                                person.pathFound();
+                            } else if (environment[i][j] == 1) {
+                                person.exitFound();
+                                person.interrupt();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        timer += 1000;
+                        if (timer >= time) {
+                            break;
+                        }
+                    }
                 }
-            }, 0, time);
-            person.interrupt();
+            }
         }
     }
 }

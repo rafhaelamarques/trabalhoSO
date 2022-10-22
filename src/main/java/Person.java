@@ -23,25 +23,28 @@ public class Person extends Thread {
 
     public void run() {
         System.out.println("Pessoa " + number + " - " + "começa em: " + x + ", " + y);
-        for (int i = 0; i < environment.length; i++) {
-            for (int j = 0; j < environment.length; j++) {
-                if (i == x && j == y) {
-                    for (int k = x; k < environment.length; k++) {
-                        for (int l = y; l < environment.length; l++) {
-                            if (environment[k][l] == 0) {
-                                System.out.println("Pessoa " + number + " - " + "Caminho encontrada em: " + k + ", " + l);
-                                try {
-                                    Thread.sleep(500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            } else if (environment[k][l] == 1) {
-                                System.out.println("Pessoa " + number + " - " + "Porta encontrada em: " + k + ", " + l);
-                            }
-                        }
-                    }
-                }
-            }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pathFound() {
+        System.out.println("Pessoa " + number + " - " + "encontrou o caminho em: " + x + ", " + y);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exitFound() {
+        System.out.println("Pessoa " + number + " - " + "encontrou a porta em: " + x + ", " + y);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
