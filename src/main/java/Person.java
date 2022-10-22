@@ -67,8 +67,8 @@ public class Person extends Thread {
         int x = 0;
         while (x < counter) {
             Map.Entry<Integer, Integer> entry = exits.entrySet().iterator().next();
-            for (int i = 0; i < counter; i++) {
-                System.out.println("Pessoa " + number + " - " + "saiu em: " + entry.getKey() + ", " + entry.getValue());
+            for (int i = 1; i <= counter; i++) {
+                System.out.println("Pessoa " + i + " - " + "saiu em: " + entry.getKey() + ", " + entry.getValue());
                 entry = getNextExit(entry);
                 x++;
             }
