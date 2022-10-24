@@ -8,7 +8,7 @@ public class Person extends Thread {
     private final int time;
     private final int[][] environment;
     private final Map<Integer, Integer> exits;
-    private final Map<Integer, Integer> alredyUsed;
+    private final Map<Integer, Integer> alreadyUsed;
 
     public Person(int number, int counter, int time, int[][] environment, Map<Integer, Integer> exits) {
         this.number = number;
@@ -16,7 +16,7 @@ public class Person extends Thread {
         this.counter = counter;
         this.environment = environment;
         this.exits = exits;
-        this.alredyUsed = new HashMap<>();
+        this.alreadyUsed = new HashMap<>();
     }
 
     public void run() {
@@ -82,11 +82,11 @@ public class Person extends Thread {
     }
 
     private Map.Entry<Integer, Integer> getNextExit(Map.Entry<Integer, Integer> exit) {
-        alredyUsed.put(exit.getKey(), exit.getValue());
+        alreadyUsed.put(exit.getKey(), exit.getValue());
         Map.Entry<Integer, Integer> entry = exits.entrySet().iterator().next();
         for (Map.Entry<Integer, Integer> e : exits.entrySet()) {
             if (!Objects.equals(e.getKey(), exit.getKey()) && !Objects.equals(e.getValue(), exit.getValue())) {
-                if (!alredyUsed.containsKey(e.getKey()) && !alredyUsed.containsValue(e.getValue())) {
+                if (!alreadyUsed.containsKey(e.getKey()) && !alreadyUsed.containsValue(e.getValue())) {
                     entry = e;
                     break;
                 } else {
