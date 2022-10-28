@@ -49,7 +49,12 @@ public class Environment {
     private void printEnvironment() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                System.out.print(environment[i][j] + " ");
+                if (environment[i][j] == 0) {
+                    System.out.println("| ");
+                };
+                else (environment[i][j] == 1) {
+                    System.out.println(" x ");
+                }
             }
             System.out.println();
         }
