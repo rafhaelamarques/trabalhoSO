@@ -9,6 +9,8 @@ public class Person extends Thread {
     private final int[][] environment;
     private final Map<Integer, Integer> exits;
     private final Map<Integer, Integer> alreadyUsed;
+    private int randomX;
+    private int randomY;
 
     public Person(int number, int counter, int time, int[][] environment, Map<Integer, Integer> exits) {
         this.number = number;
@@ -21,16 +23,15 @@ public class Person extends Thread {
 
     public void run() {
         int timer = 0;
+        startsOn();
         while (timer < time) {
-            for (int i = 0; i < environment.length; i++) {
-                for (int j = 0; j < environment.length; j++) {
+            for (int i = randomX; i < environment.length; i++) {
+                for (int j = randomY; j < environment.length; j++) {
                     try {
-                        int randomX = (int) (Math.random() * environment.length);
-                        int randomY = (int) (Math.random() * environment.length);
-                        if (environment[randomX][randomY] == 0) {
-                            pathFound(randomX, randomY);
-                        } else if (environment[randomX][randomY] == 1) {
-                            exitFound(randomX, randomY);
+                        if (environment[i][j] == 0) {
+                            pathFound(i, j);
+                        } else if (environment[i][j] == 1) {
+                            exitFound(i, j);
                         }
                         Thread.sleep(500);
                         timer += 1000;
@@ -44,6 +45,12 @@ public class Person extends Thread {
                 }
             }
         }
+    }
+
+    public void startsOn() {
+        randomX = (int) (Math.random() * environment.length);
+        randomY = (int) (Math.random() * environment.length);
+        System.out.println("Pessoa " + number + " começa em " + randomX + ", " + randomY);
     }
 
     public void pathFound(int x, int y) {
