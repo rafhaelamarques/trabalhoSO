@@ -47,13 +47,13 @@ public class Person extends Thread {
         }
     }
 
-    public void startsOn() {
+    private void startsOn() {
         randomX = (int) (Math.random() * environment.length);
         randomY = (int) (Math.random() * environment.length);
         System.out.println("Pessoa " + number + " começa em " + randomX + ", " + randomY);
     }
 
-    public void pathFound(int x, int y) {
+    private void pathFound(int x, int y) {
         System.out.println("Pessoa " + number + " - " + "encontrou um caminho em: " + x + ", " + y);
         try {
             Thread.sleep(500);
@@ -62,7 +62,7 @@ public class Person extends Thread {
         }
     }
 
-    public void exitFound(int x, int y) {
+    private void exitFound(int x, int y) {
         System.out.println("Pessoa " + number + " - " + "encontrou uma porta em: " + x + ", " + y);
         try {
             Thread.sleep(500);
