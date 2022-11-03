@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class Person extends Thread {
     private final int number;
@@ -11,6 +12,7 @@ public class Person extends Thread {
     private final Map<Integer, Integer> alreadyUsed;
     private int randomX;
     private int randomY;
+    private final Random random = new Random();
 
     public Person(int number, int counter, int time, int[][] environment, Map<Integer, Integer> exits) {
         this.number = number;
@@ -23,20 +25,17 @@ public class Person extends Thread {
 
     public void run() {
         int timer = 0;
+        int x;
         startsOn();
         while (timer < time) {
             for (int i = randomX; i < environment.length; i++) {
                 for (int j = randomY; j < environment.length; j++) {
                     try {
-                        if (environment[i][j] == 0) {
-                            pathFound(i, j);
-                        } else if (environment[i][j] == 1) {
-                            exitFound(i, j);
-                        }
+                        x = random.nextInt(4);
+                        choosePath(i, j, x);
                         Thread.sleep(500);
                         timer += 1000;
                         if (timer >= time) {
-                            gettingOut();
                             break;
                         }
                     } catch (Exception e) {
@@ -45,12 +44,72 @@ public class Person extends Thread {
                 }
             }
         }
+        gettingOut();
     }
 
     private void startsOn() {
         randomX = (int) (Math.random() * environment.length);
         randomY = (int) (Math.random() * environment.length);
         System.out.println("Pessoa " + number + " começa em " + randomX + ", " + randomY);
+    }
+
+    private void choosePath(int i, int j, int x) {
+        switch (x) {
+            case 0:
+                toLeft(i, j);
+                break;
+            case 1:
+                toRight(i, j);
+                break;
+            case 2:
+                toUp(i, j);
+                break;
+            case 3:
+                toDown(i, j);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void toLeft(int i, int j) {
+        if (j - 1 >= 0) {
+            if (environment[i][j - 1] == 0) {
+                pathFound(i, j - 1);
+            } else if (environment[i][j - 1] == 1) {
+                exitFound(i, j - 1);
+            }
+        }
+    }
+
+    private void toRight(int i, int j) {
+        if (j + 1 < environment.length) {
+            if (environment[i][j + 1] == 0) {
+                pathFound(i, j + 1);
+            } else if (environment[i][j + 1] == 1) {
+                exitFound(i, j + 1);
+            }
+        }
+    }
+
+    private void toUp(int i, int j) {
+        if (i - 1 >= 0) {
+            if (environment[i - 1][j] == 0) {
+                pathFound(i - 1, j);
+            } else if (environment[i - 1][j] == 1) {
+                exitFound(i - 1, j);
+            }
+        }
+    }
+
+    private void toDown(int i, int j) {
+        if (i + 1 < environment.length) {
+            if (environment[i + 1][j] == 0) {
+                pathFound(i + 1, j);
+            } else if (environment[i + 1][j] == 1) {
+                exitFound(i + 1, j);
+            }
+        }
     }
 
     private void pathFound(int x, int y) {
