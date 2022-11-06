@@ -53,6 +53,7 @@ public class Environment {
             }
             System.out.println();
         }
+        System.out.println("------x------");
     }
 
     private void initPeople() {
@@ -67,7 +68,7 @@ public class Environment {
         for (Person person : people) {
             try {
                 person.start();
-                Thread.sleep(500);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -33,7 +33,7 @@ public class Person extends Thread {
                     try {
                         x = random.nextInt(4);
                         choosePath(i, j, x);
-                        Thread.sleep(500);
+                        Thread.sleep(1500);
                         timer += 1000;
                         if (timer >= time) {
                             break;
@@ -50,7 +50,7 @@ public class Person extends Thread {
     private void startsOn() {
         randomX = (int) (Math.random() * environment.length);
         randomY = (int) (Math.random() * environment.length);
-        System.out.println("Pessoa " + number + " começa em " + randomX + ", " + randomY);
+        printEnvironment(randomX, randomY, number);
     }
 
     private void choosePath(int i, int j, int x) {
@@ -112,19 +112,37 @@ public class Person extends Thread {
         }
     }
 
+    private void printEnvironment(int x, int y, int p) {
+        for (int i = 0; i < environment.length; i++) {
+            for (int j = 0; j < environment.length; j++) {
+                if (i == x && j == y) {
+                    System.out.print(p);
+                } else if (environment[i][j] == 1) {
+                    System.out.print("  X  ");
+                } else {
+                    System.out.print("     ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("------------------------------x------------------------------");
+    }
+
+    ;
+
     private void pathFound(int x, int y) {
-        System.out.println("Pessoa " + number + " - " + "encontrou um caminho em: " + x + ", " + y);
+        printEnvironment(x, y, number);
         try {
-            Thread.sleep(500);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     private void exitFound(int x, int y) {
-        System.out.println("Pessoa " + number + " - " + "encontrou uma porta em: " + x + ", " + y);
+        printEnvironment(x, y, number);
         try {
-            Thread.sleep(500);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
