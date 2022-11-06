@@ -79,6 +79,8 @@ public class Person extends Thread {
             } else if (environment[i][j - 1] == 1) {
                 exitFound(i, j - 1);
             }
+        } else {
+            System.out.println("Caminho à esquerda indisponível");
         }
     }
 
@@ -89,6 +91,8 @@ public class Person extends Thread {
             } else if (environment[i][j + 1] == 1) {
                 exitFound(i, j + 1);
             }
+        } else {
+            System.out.println("Caminho à direita indisponível");
         }
     }
 
@@ -99,6 +103,8 @@ public class Person extends Thread {
             } else if (environment[i - 1][j] == 1) {
                 exitFound(i - 1, j);
             }
+        } else {
+            System.out.println("Caminho acima indisponível");
         }
     }
 
@@ -109,6 +115,8 @@ public class Person extends Thread {
             } else if (environment[i + 1][j] == 1) {
                 exitFound(i + 1, j);
             }
+        } else {
+            System.out.println("Caminho abaixo indisponível");
         }
     }
 
